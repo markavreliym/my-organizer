@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Мой органайзер</title>
+
+<meta name="theme-color" content="#17191F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Органайзер">
+
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #17191F;
+    color: #F2F3F5;
+  }
+
+  h1 {
+    text-align: center;
+    color: #FFFFFF;
+    margin-bottom: 28px;
+  }
+
+  .add-task {
+    display: flex;
+    gap: 10px;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #414654;
+    border-radius: 10px;
+    background: #252832;
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+
+select {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #414654;
+  border-radius: 10px;
+  background: #252832;
+  color: #FFFFFF;
+  font-size: 16px;
+}
+
+select option {
+  background: #252832;
+  color: #FFFFFF;
+}
+
+  input::placeholder {
+    color: #A0A5B2;
+  }
+
+  button {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    background: #8BAAFF;
+    color: #17191F;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #A6BDFF;
+  }
+
+  #taskList {
+    padding: 0;
+    list-style: none;
+    margin-top: 22px;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 14px;
+    background: #252832;
+    border: 1px solid #343845;
+    border-radius: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  li span {
+    flex: 1;
+  }
+
+  li.done span {
+    text-decoration: line-through;
+    color: #9298A6;
+  }
+
+  li input {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    accent-color: #8BAAFF;
+  }
+
+  li button {
+    background: #3B2930;
+    color: #FFB4BE;
+    padding: 9px 11px;
+    font-size: 14px;
+  }
+
+  li button:hover {
+    background: #56313B;
+  }
+
+  @media (max-width: 480px) {
+    body {
+      margin: 16px auto;
+      padding: 16px;
+    }
+
+    .add-task {
+      gap: 8px;
+    }
+
+    .add-task button {
+      padding: 12px;
+    }
+
+    li {
+      padding: 12px;
+      gap: 8px;
+    }
+
+    li button {
+      padding: 8px;
+    }
+  }
+
+.progress-card {
+  margin: 20px 0;
+  padding: 18px;
+  background: #252832;
+  border: 1px solid #343845;
+  border-radius: 14px;
+}
+
+.stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.stat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  padding: 12px;
+  background: #303440;
+  border-radius: 10px;
+  color: #B7BDCA;
+  font-size: 14px;
+}
+
+.stat span:first-child {
+  color: #FFFFFF;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  color: #C4C9D4;
+  font-size: 14px;
+}
+
+.progress-track {
+  height: 10px;
+  overflow: hidden;
+  background: #414654;
+  border-radius: 999px;
+}
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: #8BAAFF;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.task-category {
+  flex: none;
+  padding: 5px 8px;
+  border-radius: 7px;
+  background: #343D52;
+  color: #B7CAFF;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .add-task {
+    flex-wrap: wrap;
+  }
+
+  .add-task input {
+    flex-basis: 100%;
+  }
+
+  .add-task select {
+    flex: 1;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.filters .filter-button {
+  flex: 1;
+  min-width: 65px;
+  padding: 10px;
+  background: #252832;
+  border: 1px solid #414654;
+  color: #C4C9D4;
+  font-size: 14px;
+}
+
+.filters .filter-button.active {
+  background: #8BAAFF;
+  border-color: #8BAAFF;
+  color: #17191F;
+}
+
+.task-date {
+  flex: none;
+  color: #B7BDCA;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.task-date.overdue {
+  color: #FF8F9B;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .task-date {
+    white-space: normal;
+  }
+}
+
+/* Удобство использования на телефоне */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+/* Поля и кнопки удобнее нажимать пальцем */
+input,
+select,
+button {
+  min-height: 44px;
+}
+
+button {
+  touch-action: manipulation;
+}
+
+/* Не даём панели добавления вылезать за экран */
+.add-task {
+  flex-wrap: wrap;
+}
+
+.add-task input {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+.add-task select {
+  flex: 1;
+}
+
+.add-task button {
+  flex: 0 0 auto;
+}
+
+/* Длинные названия задач не ломают разметку */
+li {
+  min-width: 0;
+}
+
+li span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 16px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  li {
+    flex-wrap: wrap;
+  }
+
+  li span {
+    flex: 1 1 60%;
+  }
+
+  .task-category,
+  .task-date {
+    margin-left: 30px;
+  }
+}
+
+</style>
+</head>
+<body>
+  <h1>Мои задачи</h1>
+
+<div class="filters">
+  <button class="filter-button active" data-category="Все">Все</button>
+  <button class="filter-button" data-category="Работа">Работа</button>
+  <button class="filter-button" data-category="Дом">Дом</button>
+  <button class="filter-button" data-category="Личное">Личное</button>
+</div>
+
+<div class="progress-card">
+  <div class="stats">
+    <div class="stat">
+      <span id="activeCount">0</span>
+      <span>Активных</span>
+    </div>
+    <div class="stat">
+      <span id="doneCount">0</span>
+      <span>Выполнено</span>
+    </div>
+  </div>
+
+  <div class="progress-info">
+    <span>Общий прогресс</span>
+    <span id="progressPercent">0%</span>
+  </div>
+
+  <div class="progress-track">
+    <div id="progressBar" class="progress-fill"></div>
+  </div>
+</div>
+
+ 
+
+<div class="add-task">
+  <input id="taskInput" placeholder="Что нужно сделать?">
+
+  <select id="categoryInput">
+    <option value="Работа">Работа</option>
+    <option value="Дом">Дом</option>
+    <option value="Личное">Личное</option>
+  </select>
+
+  <input id="dateInput" type="date" aria-label="Срок выполнения">
+
+  <button id="addButton">Добавить</button>
+</div>
+
+
+  <ul id="taskList"></ul>
+
+  <script>
+    const input = document.getElementById('taskInput');
+    const categoryInput = document.getElementById('categoryInput');
+const list = document.getElementById('taskList');
+const dateInput = document.getElementById('dateInput');
+let currentFilter = 'Все';
+
+
+
+let tasks = JSON.parse(
+  localStorage.getItem('myTasks') || '[]'
+).map(task => ({
+  ...task,
+  category: task.category || 'Личное',
+  date: task.date || ''
+}));
+
+
+
+function saveTasks() {
+  localStorage.setItem('myTasks', JSON.stringify(tasks));
+}
+
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
+function renderTasks() {
+  list.innerHTML = '';
+
+
+const active = tasks.filter(task => !task.done).length;
+const completed = tasks.filter(task => task.done).length;
+const total = tasks.length;
+
+const percent = total === 0
+  ? 0
+  : Math.round((completed / total) * 100);
+
+document.getElementById('activeCount').textContent = active;
+document.getElementById('doneCount').textContent = completed;
+document.getElementById('progressPercent').textContent = percent + '%';
+document.getElementById('progressBar').style.width = percent + '%';
+
+
+  tasks.forEach((task, index) => {
+  if (currentFilter !== 'Все' && task.category !== currentFilter) {
+    return;
+  }
+    const item = document.createElement('li');
+    if (task.done) item.classList.add('done');
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = task.done;
+
+    checkbox.addEventListener('change', () => {
+      tasks[index].done = checkbox.checked;
+      saveTasks();
+      renderTasks();
+    });
+
+    const label = document.createElement('span');
+    label.textContent = task.text;
+
+const categoryLabel = document.createElement('small');
+categoryLabel.className = 'task-category';
+categoryLabel.textContent = task.category;
+
+const dateLabel = document.createElement('small');
+dateLabel.className = 'task-date';
+
+if (task.date) {
+  const parts = task.date.split('-');
+  dateLabel.textContent = `${parts[2]}.${parts[1]}.${parts[0]}`;
+} else {
+  dateLabel.textContent = 'Без срока';
+}
+if (task.date && task.date < getTodayDate() && !task.done) {
+  dateLabel.classList.add('overdue');
+}
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Удалить';
+    removeButton.addEventListener('click', () => {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    });
+
+    item.append(
+  checkbox,
+  label,
+  categoryLabel,
+  dateLabel,
+  removeButton
+);
+    list.appendChild(item);
+  });
+}
+
+function addTask() {
+  const text = input.value.trim();
+  if (!text) return;
+
+
+tasks.push({
+  text: text,
+  category: categoryInput.value,
+  date: dateInput.value,
+  done: false
+});
+
+  saveTasks();
+  renderTasks();
+
+  input.value = '';
+  dateInput.value = '';
+  input.focus();
+}
+
+document.getElementById('addButton').addEventListener('click', addTask);
+
+input.addEventListener('keydown', event => {
+  if (event.key === 'Enter') addTask();
+});
+
+document.querySelectorAll('.filter-button').forEach(button => {
+  button.addEventListener('click', () => {
+    currentFilter = button.dataset.category;
+
+    document.querySelectorAll('.filter-button').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    button.classList.add('active');
+    renderTasks();
+  });
+});
+
+renderTasks();
+  </script>
+</body>
+</html>
