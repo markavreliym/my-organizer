@@ -86,17 +86,19 @@ select option {
     margin-top: 22px;
   }
 
-  li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 10px;
-    padding: 14px;
-    background: #252832;
-    border: 1px solid #343845;
-    border-radius: 12px;
-    overflow-wrap: anywhere;
-  }
+ li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 14px;
+  background: #252832;
+  border: 1px solid #343845;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
 
   li span {
     flex: 1;
@@ -350,6 +352,282 @@ li span {
   }
 }
 
+.date-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 22px;
+  padding: 14px;
+  background: #252832;
+  border: 1px solid #343845;
+  border-radius: 12px;
+}
+
+.date-filters label {
+  flex: 1 1 100%;
+  color: #C4C9D4;
+  font-size: 14px;
+}
+
+.date-filters input {
+  flex: 1;
+  min-width: 140px;
+  width: auto;
+}
+
+.date-filters button {
+  padding: 10px 12px;
+}
+
+@media (max-width: 480px) {
+  .date-filters input {
+    width: 100%;
+    flex-basis: 100%;
+  }
+}
+
+.calendar-card {
+  margin: 18px 0 24px;
+  padding: 16px;
+  background: #252832;
+  border: 1px solid #343845;
+  border-radius: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.calendar-header h2 {
+  margin: 0;
+  color: #FFFFFF;
+  font-size: 18px;
+  text-align: center;
+}
+
+.calendar-header button {
+  width: 44px;
+  padding: 6px;
+  background: #343845;
+  color: #FFFFFF;
+  font-size: 28px;
+}
+
+.today-button,
+.all-dates-button {
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.calendar-weekdays,
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.calendar-weekdays {
+  margin-bottom: 8px;
+  color: #A0A5B2;
+  text-align: center;
+  font-size: 12px;
+}
+
+.calendar-weekdays span {
+  padding: 5px 0;
+}
+
+.calendar-days button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  min-height: 48px;
+  padding: 4px 0;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #F2F3F5;
+  font-size: 14px;
+}
+
+.calendar-days button:hover {
+  background: #343845;
+}
+
+.calendar-days button.selected {
+  background: #8BAAFF;
+  color: #17191F;
+}
+
+.calendar-days button.today:not(.selected) {
+  border-color: #8BAAFF;
+}
+
+.calendar-days button.other-month {
+  color: #777E8D;
+}
+
+.calendar-days .task-count {
+  min-width: 17px;
+  padding: 1px 4px;
+  border-radius: 8px;
+  background: #3B4763;
+  color: #DCE5FF;
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.calendar-days button.selected .task-count {
+  background: #17191F;
+  color: #FFFFFF;
+}
+
+.calendar-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0;
+  color: #A0A5B2;
+  font-size: 12px;
+}
+
+.calendar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8BAAFF;
+}
+
+.all-dates-button {
+  margin-bottom: 0;
+  background: #343845;
+  color: #FFFFFF;
+}
+
+@media (max-width: 380px) {
+  .calendar-card {
+    padding: 10px;
+  }
+
+  .calendar-weekdays,
+  .calendar-days {
+    gap: 2px;
+  }
+
+  .calendar-days button {
+    min-height: 42px;
+  }
+}
+
+#commentInput {
+  flex: 1 1 100%;
+  width: 100%;
+  min-height: 64px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid #414654;
+  border-radius: 10px;
+  background: #252832;
+  color: #FFFFFF;
+  font: inherit;
+}
+
+#commentInput::placeholder {
+  color: #A0A5B2;
+}
+
+/* Задачи с комментариями */
+li.has-comment {
+  border-left: 4px solid #8BAAFF;
+}
+
+/* Подсказка, что задачу можно открыть */
+li .task-label {
+  cursor: pointer;
+}
+
+li .task-label::after {
+  content: "  ▾";
+  color: #8BAAFF;
+  font-size: 12px;
+}
+
+li.comment-open .task-label::after {
+  content: "  ▴";
+}
+
+/* Область с комментарием */
+.comment-panel {
+  display: block;
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 12px;
+  background: #1D2028;
+  border-radius: 10px;
+}
+
+.comment-text {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 12px;
+  color: #D5D9E2;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.comment-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-editor textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border: 1px solid #414654;
+  border-radius: 8px;
+  background: #252832;
+  color: #FFFFFF;
+  font: inherit;
+  resize: vertical;
+}
+
+.comment-editor button {
+  align-self: flex-start;
+}
+
+.comment-toggle {
+  flex: none;
+  padding: 7px 9px;
+  background: #343D52;
+  color: #DCE5FF;
+  font-size: 12px;
+}
+
+@media (max-width: 480px) {
+  .comment-toggle {
+    margin-left: 30px;
+  }
+}
+.comment-panel[hidden] {
+  display: none !important;
+}
 </style>
 </head>
 <body>
@@ -361,6 +639,45 @@ li span {
   <button class="filter-button" data-category="Дом">Дом</button>
   <button class="filter-button" data-category="Личное">Личное</button>
 </div>
+
+
+
+<div class="calendar-card">
+  <div class="calendar-header">
+    <button id="prevMonth" type="button" aria-label="Предыдущий месяц">‹</button>
+    <h2 id="monthTitle">Октябрь 2026</h2>
+    <button id="nextMonth" type="button" aria-label="Следующий месяц">›</button>
+  </div>
+
+  <button id="todayButton" class="today-button" type="button">
+    Сегодня
+  </button>
+
+  <div class="calendar-weekdays">
+    <span>Пн</span>
+    <span>Вт</span>
+    <span>Ср</span>
+    <span>Чт</span>
+    <span>Пт</span>
+    <span>Сб</span>
+    <span>Вс</span>
+  </div>
+
+  <div id="calendarDays" class="calendar-days"></div>
+
+  <div class="calendar-footer">
+    <span class="calendar-dot"></span>
+    <span>Количество задач на день</span>
+  </div>
+
+  <button id="clearDateFilter" class="all-dates-button" type="button">
+    Показать все даты
+  </button>
+</div>
+
+<input id="filterDate" type="hidden" value="">
+
+
 
 <div class="progress-card">
   <div class="stats">
@@ -397,6 +714,12 @@ li span {
 
   <input id="dateInput" type="date" aria-label="Срок выполнения">
 
+<textarea
+  id="commentInput"
+  placeholder="Комментарий к задаче (необязательно)"
+  rows="2"
+></textarea>
+
   <button id="addButton">Добавить</button>
 </div>
 
@@ -406,9 +729,20 @@ li span {
   <script>
     const input = document.getElementById('taskInput');
     const categoryInput = document.getElementById('categoryInput');
-const list = document.getElementById('taskList');
-const dateInput = document.getElementById('dateInput');
-let currentFilter = 'Все';
+    const list = document.getElementById('taskList');
+    const dateInput = document.getElementById('dateInput');
+    const filterDate = document.getElementById('filterDate');
+    const commentInput = document.getElementById('commentInput');
+    const calendarDays = document.getElementById('calendarDays');
+    const monthTitle = document.getElementById('monthTitle');
+    let currentFilter = 'Все';
+    let displayedMonth = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
+
+    let selectedDate = '';
 
 
 
@@ -417,7 +751,8 @@ let tasks = JSON.parse(
 ).map(task => ({
   ...task,
   category: task.category || 'Личное',
-  date: task.date || ''
+  date: task.date || '',
+  comment: task.comment || '',
 }));
 
 
@@ -435,6 +770,90 @@ function getTodayDate() {
   return `${year}-${month}-${day}`;
 }
 
+function renderCalendar() {
+  const year = displayedMonth.getFullYear();
+  const month = displayedMonth.getMonth();
+
+  const monthNames = [
+    'Январь', 'Февраль', 'Март', 'Апрель',
+    'Май', 'Июнь', 'Июль', 'Август',
+    'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+  ];
+
+  monthTitle.textContent = `${monthNames[month]} ${year}`;
+  calendarDays.innerHTML = '';
+
+  const firstDay = new Date(year, month, 1);
+  const offset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const start = new Date(year, month, 1 - offset);
+  const today = getTodayDate();
+
+  const taskCounts = {};
+
+  tasks.forEach(task => {
+    if (task.date) {
+      taskCounts[task.date] = (taskCounts[task.date] || 0) + 1;
+    }
+  });
+
+  for (let i = 0; i < 42; i++) {
+    const date = new Date(
+      start.getFullYear(),
+      start.getMonth(),
+      start.getDate() + i
+    );
+
+    const dateString = [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, '0'),
+      String(date.getDate()).padStart(2, '0')
+    ].join('-');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = date.getDate();
+
+    if (date.getMonth() !== month) {
+      button.classList.add('other-month');
+    }
+
+    if (dateString === today) {
+      button.classList.add('today');
+    }
+
+    if (dateString === selectedDate) {
+      button.classList.add('selected');
+    }
+
+    const count = taskCounts[dateString] || 0;
+
+    if (count > 0) {
+      const badge = document.createElement('span');
+      badge.className = 'task-count';
+      badge.textContent = count;
+      button.appendChild(badge);
+    }
+
+    button.addEventListener('click', () => {
+      selectedDate = dateString;
+      filterDate.value = dateString;
+
+      displayedMonth = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        1
+      );
+
+      renderCalendar();
+      renderTasks();
+    });
+
+    calendarDays.appendChild(button);
+  }
+}
+
 function renderTasks() {
   list.innerHTML = '';
 
@@ -447,14 +866,17 @@ const percent = total === 0
   ? 0
   : Math.round((completed / total) * 100);
 
-document.getElementById('activeCount').textContent = active;
-document.getElementById('doneCount').textContent = completed;
-document.getElementById('progressPercent').textContent = percent + '%';
-document.getElementById('progressBar').style.width = percent + '%';
+    document.getElementById('activeCount').textContent = active;
+    document.getElementById('doneCount').textContent = completed;
+    document.getElementById('progressPercent').textContent = percent + '%';
+    document.getElementById('progressBar').style.width = percent + '%';
 
 
   tasks.forEach((task, index) => {
   if (currentFilter !== 'Все' && task.category !== currentFilter) {
+    return;
+  }
+  if (filterDate.value && task.date !== filterDate.value) {
     return;
   }
     const item = document.createElement('li');
@@ -470,8 +892,58 @@ document.getElementById('progressBar').style.width = percent + '%';
       renderTasks();
     });
 
-    const label = document.createElement('span');
-    label.textContent = task.text;
+   
+const label = document.createElement('span');
+label.className = 'task-label';
+label.textContent = task.text;
+label.title = 'Нажми, чтобы открыть комментарий';
+
+const commentPanel = document.createElement('div');
+commentPanel.className = 'comment-panel';
+commentPanel.hidden = true;
+
+const commentText = document.createElement('p');
+commentText.className = 'comment-text';
+commentText.textContent = task.comment || '';
+
+const commentEditor = document.createElement('div');
+commentEditor.className = 'comment-editor';
+
+const commentArea = document.createElement('textarea');
+commentArea.placeholder = 'Добавить или изменить комментарий...';
+commentArea.value = task.comment || '';
+commentArea.setAttribute('aria-label', 'Комментарий к задаче');
+
+const saveCommentButton = document.createElement('button');
+saveCommentButton.textContent = 'Сохранить комментарий';
+
+const commentToggle = document.createElement('button');
+commentToggle.className = 'comment-toggle';
+commentToggle.type = 'button';
+commentToggle.textContent = task.comment ? '📝 Заметка' : '+ Комментарий';
+commentToggle.setAttribute('aria-label', 'Открыть комментарий');
+
+function toggleComment() {
+  commentPanel.hidden = !commentPanel.hidden;
+  item.classList.toggle('comment-open', !commentPanel.hidden);
+}
+
+label.addEventListener('click', toggleComment);
+commentToggle.addEventListener('click', toggleComment);
+
+saveCommentButton.addEventListener('click', () => {
+  tasks[index].comment = commentArea.value.trim();
+  saveTasks();
+  renderTasks();
+});
+
+commentEditor.append(commentArea, saveCommentButton);
+commentPanel.append(commentText, commentEditor);
+
+if (task.comment && task.comment.trim()) {
+  item.classList.add('has-comment');
+}
+
 
 const categoryLabel = document.createElement('small');
 categoryLabel.className = 'task-category';
@@ -489,7 +961,6 @@ if (task.date) {
 if (task.date && task.date < getTodayDate() && !task.done) {
   dateLabel.classList.add('overdue');
 }
-
     const removeButton = document.createElement('button');
     removeButton.textContent = 'Удалить';
     removeButton.addEventListener('click', () => {
@@ -498,13 +969,17 @@ if (task.date && task.date < getTodayDate() && !task.done) {
       renderTasks();
     });
 
-    item.append(
+    
+item.append(
   checkbox,
   label,
   categoryLabel,
   dateLabel,
-  removeButton
+  commentToggle,
+  removeButton,
+  commentPanel
 );
+
     list.appendChild(item);
   });
 }
@@ -514,18 +989,22 @@ function addTask() {
   if (!text) return;
 
 
+
 tasks.push({
   text: text,
   category: categoryInput.value,
   date: dateInput.value,
+  comment: commentInput.value.trim(),
   done: false
 });
+
 
   saveTasks();
   renderTasks();
 
   input.value = '';
   dateInput.value = '';
+  commentInput.value = '';
   input.focus();
 }
 
@@ -547,6 +1026,55 @@ document.querySelectorAll('.filter-button').forEach(button => {
     renderTasks();
   });
 });
+
+filterDate.addEventListener('change', () => {
+  renderTasks();
+});
+
+document.getElementById('clearDateFilter').addEventListener('click', () => {
+  filterDate.value = '';
+  renderTasks();
+});
+
+document.getElementById('prevMonth').addEventListener('click', () => {
+  displayedMonth = new Date(
+    displayedMonth.getFullYear(),
+    displayedMonth.getMonth() - 1,
+    1
+  );
+  renderCalendar();
+});
+
+document.getElementById('nextMonth').addEventListener('click', () => {
+  displayedMonth = new Date(
+    displayedMonth.getFullYear(),
+    displayedMonth.getMonth() + 1,
+    1
+  );
+  renderCalendar();
+});
+
+document.getElementById('todayButton').addEventListener('click', () => {
+  const today = getTodayDate();
+  selectedDate = today;
+  filterDate.value = today;
+
+  const parts = today.split('-').map(Number);
+  displayedMonth = new Date(parts[0], parts[1] - 1, 1);
+
+  renderCalendar();
+  renderTasks();
+});
+
+document.getElementById('clearDateFilter').addEventListener('click', () => {
+  selectedDate = '';
+  filterDate.value = '';
+
+  renderCalendar();
+  renderTasks();
+});
+
+renderCalendar();
 
 renderTasks();
   </script>
