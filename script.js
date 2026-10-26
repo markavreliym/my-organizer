@@ -6,6 +6,11 @@ const input = document.getElementById('taskInput');
     const commentInput = document.getElementById('commentInput');
     const calendarDays = document.getElementById('calendarDays');
     const monthTitle = document.getElementById('monthTitle');
+    const addTaskForm = document.getElementById('addTaskForm');
+    const taskFormTitle = document.getElementById('taskFormTitle');
+    const createDatedTaskButton = document.getElementById('createDatedTaskButton');
+    const createUndatedTaskButton = document.getElementById('createUndatedTaskButton');
+    const cancelTaskButton = document.getElementById('cancelTaskButton');
     let currentFilter = 'Все';
     let displayedMonth = new Date(
       new Date().getFullYear(),
@@ -144,12 +149,21 @@ const percent = total === 0
 
 
   tasks.forEach((task, index) => {
-  if (currentFilter !== 'Все' && task.category !== currentFilter) {
-    return;
-  }
-  if (filterDate.value && task.date !== filterDate.value) {
-    return;
-  }
+  if (currentFilter === 'Без даты' && task.date) {
+  return;
+}
+
+if (
+  currentFilter !== 'Все' &&
+  currentFilter !== 'Без даты' &&
+  task.category !== currentFilter
+) {
+  return;
+}
+
+if (filterDate.value && task.date !== filterDate.value) {
+  return;
+}
     const item = document.createElement('li');
     if (task.done) item.classList.add('done');
 
@@ -285,8 +299,9 @@ tasks.push({
 });
 
 
-  saveTasks();
-  renderTasks();
+saveTasks();
+renderCalendar();
+renderTasks();
 
   input.value = '';
   dateInput.value = '';
@@ -294,6 +309,40 @@ tasks.push({
   input.focus();
 }
 
+// Создание задачи на выбранную дату
+createDatedTaskButton.addEventListener('click', () => {
+  const date = filterDate.value;
+
+  if (!date) {
+    alert('Сначала выбери дату в календаре.');
+    return;
+  }
+
+  dateInput.value = date;
+  taskFormTitle.textContent = 'Задача на выбранную дату';
+  addTaskForm.hidden = false;
+  input.focus();
+});
+
+// Создание задачи без даты
+createUndatedTaskButton.addEventListener('click', () => {
+  dateInput.value = '';
+  taskFormTitle.textContent = 'Задача без даты';
+  addTaskForm.hidden = false;
+  input.focus();
+});
+
+// Закрытие формы
+cancelTaskButton.addEventListener('click', () => {
+  addTaskForm.hidden = true;
+input.value = '';
+dateInput.value = '';
+commentInput.value = '';
+addTaskForm.hidden = true;
+
+renderCalendar();
+renderTasks();
+});
 document.getElementById('addButton').addEventListener('click', addTask);
 
 input.addEventListener('keydown', event => {

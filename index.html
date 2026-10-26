@@ -25,6 +25,9 @@
   <button class="filter-button" data-category="Работа">Работа</button>
   <button class="filter-button" data-category="Дом">Дом</button>
   <button class="filter-button" data-category="Личное">Личное</button>
+  <button class="filter-button" data-category="Без даты" type="button">
+  Без даты
+</button>
 </div>
 
 
@@ -98,25 +101,42 @@
 
  
 
-<div class="add-task">
-  <input id="taskInput" placeholder="Что нужно сделать?">
 
-  <select id="categoryInput">
-    <option value="Работа">Работа</option>
-    <option value="Дом">Дом</option>
-    <option value="Личное">Личное</option>
-  </select>
+<div class="task-creation">
+  <div class="task-creation-buttons">
+    <button id="createDatedTaskButton" type="button">
+      + Создать задачу на выбранную дату
+    </button>
 
-  <input id="dateInput" type="date" aria-label="Срок выполнения">
+    <button id="createUndatedTaskButton" type="button">
+      + Создать задачу без даты
+    </button>
+  </div>
 
-<textarea
-  id="commentInput"
-  placeholder="Комментарий к задаче (необязательно)"
-  rows="2"
-></textarea>
+  <div class="add-task" id="addTaskForm" hidden>
+    <h2 id="taskFormTitle">Новая задача</h2>
 
-  <button id="addButton">Добавить</button>
+    <input id="taskInput" placeholder="Что нужно сделать?">
+
+    <select id="categoryInput">
+      <option value="Работа">Работа</option>
+      <option value="Дом">Дом</option>
+      <option value="Личное">Личное</option>
+    </select>
+
+    <input id="dateInput" type="date" aria-label="Срок выполнения">
+
+    <textarea
+      id="commentInput"
+      placeholder="Комментарий к задаче (необязательно)"
+      rows="2"
+    ></textarea>
+
+    <button id="addButton" type="button">Добавить задачу</button>
+    <button id="cancelTaskButton" type="button">Отмена</button>
+  </div>
 </div>
+
 
 
   <ul id="taskList"></ul>
