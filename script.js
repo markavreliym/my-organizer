@@ -12,6 +12,7 @@ const input = document.getElementById('taskInput');
     const createUndatedTaskButton = document.getElementById('createUndatedTaskButton');
     const cancelTaskButton = document.getElementById('cancelTaskButton');
     let currentFilter = 'Все';
+    let showUndatedOnly = false;
     let displayedMonth = new Date(
       new Date().getFullYear(),
       new Date().getMonth(),
@@ -149,18 +150,17 @@ const percent = total === 0
 
 
   tasks.forEach((task, index) => {
-  if (currentFilter === 'Без даты' && task.date) {
+  // Фильтр по категории
+if (currentFilter !== 'Все' && task.category !== currentFilter) {
   return;
 }
 
-if (
-  currentFilter !== 'Все' &&
-  currentFilter !== 'Без даты' &&
-  task.category !== currentFilter
-) {
+// Независимый фильтр задач без даты
+if (showUndatedOnly && task.date) {
   return;
 }
 
+// Фильтр по дате календаря
 if (filterDate.value && task.date !== filterDate.value) {
   return;
 }
@@ -360,6 +360,18 @@ document.querySelectorAll('.filter-button').forEach(button => {
     button.classList.add('active');
     renderTasks();
   });
+});
+
+// Независимый фильтр «Без даты»
+const undatedFilterButton = document.getElementById('undatedFilterButton');
+
+undatedFilterButton.addEventListener('click', () => {
+  showUndatedOnly = !showUndatedOnly;
+
+  undatedFilterButton.classList.toggle('active', showUndatedOnly);
+  undatedFilterButton.setAttribute('aria-pressed', String(showUndatedOnly));
+
+  renderTasks();
 });
 
 filterDate.addEventListener('change', () => {

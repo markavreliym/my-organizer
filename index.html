@@ -20,15 +20,28 @@
 <body>
   <h1>Мои задачи</h1>
 
+
 <div class="filters">
-  <button class="filter-button active" data-category="Все">Все</button>
-  <button class="filter-button" data-category="Работа">Работа</button>
-  <button class="filter-button" data-category="Дом">Дом</button>
-  <button class="filter-button" data-category="Личное">Личное</button>
-  <button class="filter-button" data-category="Без даты" type="button">
-  Без даты
-</button>
+  <div class="category-filters">
+    <button class="filter-button active" data-category="Все" type="button">
+      Все
+    </button>
+    <button class="filter-button" data-category="Работа" type="button">
+      Работа
+    </button>
+    <button class="filter-button" data-category="Дом" type="button">
+      Дом
+    </button>
+    <button class="filter-button" data-category="Личное" type="button">
+      Личное
+    </button>
+  </div>
+
+  <button id="undatedFilterButton" class="undated-filter-button" type="button" aria-pressed="false">
+    Без даты
+  </button>
 </div>
+
 
 
 

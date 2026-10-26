@@ -686,6 +686,35 @@ li.comment-open .task-label::after {
 #addTaskForm[hidden] {
   display: none !important;
 }
+
+/* Фильтры категорий и задач без даты */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.undated-filter-button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #343845;
+  border-radius: 10px;
+  background: #252832;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.undated-filter-button.active {
+  background: #5268A5;
+  border-color: #5268A5;
+}
 /*.calendar-arrow {
   transition: transform 0.3s ease;
 }*/
